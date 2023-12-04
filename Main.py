@@ -4,13 +4,10 @@ import random
 from settings import *
 
 PC = []
-#Bag = ["Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Great Ball", "Great Ball", "Great Ball", "Ultra Ball"]
-Bag = ["Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball"]
+Bag = ["Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Great Ball", "Great Ball", "Great Ball", "Ultra Ball"]
+
 
 count = 0
-
-catch_count = 0
-
 
 def looping(waittime, speed, x):
     timer = float(waittime)
@@ -41,9 +38,9 @@ def start():
         while True:
             confirm = str(input("> ").upper())
             if confirm == "Y" or confirm == "YES":
-                return name
                 time.sleep(0.75)
                 os.system("cls")
+                return name
             elif confirm == "N" or confirm == "NO":
                 time.sleep(0.5)
                 print("So, What is your name?")
@@ -117,7 +114,7 @@ def start():
                         confirm = str(input("> ").upper())
                         if confirm == "Y" or confirm == "YES":
                             time.sleep(0.25)
-                            print("You chose", starter_list[first_pokemon], "!")
+                            print("You chose " + starter_list[first_pokemon] + "!")
                             time.sleep(1)
                             PC.append(starter_list[first_pokemon])
                             print(starter_list[first_pokemon], "was sent to Your PC")
@@ -190,6 +187,8 @@ start()
 time.sleep(5)
 os.system("cls")
 
+global catch_count
+catch_count = 0
 
 def explore():
     global ball_bag, ballchoice, item_chance
@@ -228,13 +227,12 @@ def explore():
     if shiny_chance >= 90:
         time.sleep(0.5)
         print("Its color seems to be different")
-        is_shiny = True
     if item_drop_chance == 10:
         time.sleep(0.5)
         print("Looks like it's holding something")
 
     def action():
-        global catch_count, ballchoice, cmax, cmin, f1max, f1min, f2max, f2min, f3max, f3min, f4max, f4min
+        global ballchoice, cmax, cmin, f1max, f1min, f2max, f2min, f3max, f3min, f4max, f4min, catch_count
         cmin, cmax = 0, 0
         f4min, f4max = 0, 0
         f3min, f3max = 0, 0
@@ -398,7 +396,6 @@ def explore():
                 time.sleep(0.75)
                 print("You put", item[item_chance], "in your bag")
                 Bag.append(item[item_chance])
-
             if f1max >= catch_chance >= f1min:
                 catch_count += 1
                 time.sleep(1)
@@ -434,7 +431,7 @@ def explore():
             elif cmax >= catch_chance >= cmin:
                 time.sleep(1)
                 print("Poké Ball shake 3 time")
-                if is_shiny:
+                if shiny_chance >= 90:
                     time.sleep(1)
                     print("Gotcha! ✨", pokemon_list[pokemon], "was caught!")
                     if item_drop_chance == 10:
@@ -453,14 +450,17 @@ def explore():
                     print(pokemon_list[pokemon], "was sent to PC!")
                     PC.append(pokemon_list[pokemon])
                 time.sleep(1)
+                catch_count = 0
                 os.system("cls")
                 mainmenu()
             if catch_count == 5:
                 time.sleep(1.5)
                 print("Wild", pokemon_list[pokemon], "fled!")
                 time.sleep(2)
+                catch_count = 0
+                os.system("cls")
                 mainmenu()
-            print("catch count :"+str(catch_count))
+            #print("catch count :"+str(catch_count))
             time.sleep(1.5)
             os.system("cls")
             action()
