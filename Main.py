@@ -4,8 +4,8 @@ import random
 from settings import *
 
 PC = []
-Bag = ["Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", 'Great Ball', 'Great Ball', 'Great Ball',
-       'Ultra Ball']
+#Bag = ["Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Great Ball", "Great Ball", "Great Ball", "Ultra Ball"]
+Bag = ["Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Ultra Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball", "Poke Ball"]
 
 count = 0
 
@@ -13,7 +13,6 @@ catch_count = 0
 
 
 def looping(waittime, speed, x):
-    dot_amount = 0
     timer = float(waittime)
     dot = [" ", ".", "..", "..."]
 
@@ -22,8 +21,6 @@ def looping(waittime, speed, x):
             print(x + i, end="")
             print("\r" + x + i, end="")
             time.sleep(0.75)
-            if dot_amount > 3:
-                dot_amount = 0
             timer -= float(speed)
         if timer <= 0:
             break
@@ -228,9 +225,10 @@ def explore():
     os.system("cls")
     time.sleep(0.25)
     print("\nWild", pokemon_list[pokemon], "appear!")
-    if shiny_chance == 100:
+    if shiny_chance >= 90:
         time.sleep(0.5)
         print("Its color seems to be different")
+        is_shiny = True
     if item_drop_chance == 10:
         time.sleep(0.5)
         print("Looks like it's holding something")
@@ -409,14 +407,6 @@ def explore():
                 print("Poké Ball broke!")
                 time.sleep(0.75)
                 print("Oh no! The", pokemon_list[pokemon], "broke free!")
-                if catch_count == 5:
-                    time.sleep(1.5)
-                    print("Wild", pokemon_list[pokemon], "fled!")
-                    time.sleep(2)
-                    mainmenu()
-                time.sleep(1.5)
-                os.system("cls")
-                action()
             elif f2max >= catch_chance >= f2min:
                 catch_count += 1
                 time.sleep(1)
@@ -425,14 +415,6 @@ def explore():
                 print("Poké Ball broke!")
                 time.sleep(0.75)
                 print("Darn! The", pokemon_list[pokemon], "broke free!")
-                if catch_count == 5:
-                    time.sleep(1.5)
-                    print("Wild", pokemon_list[pokemon], "fled!")
-                    time.sleep(2)
-                    mainmenu()
-                time.sleep(1.5)
-                os.system("cls")
-                action()
             elif f3max >= catch_chance >= f3min:
                 catch_count += 1
                 time.sleep(1)
@@ -441,14 +423,6 @@ def explore():
                 print("Poké Ball broke!")
                 time.sleep(0.75)
                 print("Aargh! Almost had it!")
-                if catch_count == 5:
-                    time.sleep(1.5)
-                    print("Wild", pokemon_list[pokemon], "fled!")
-                    time.sleep(2)
-                    mainmenu()
-                time.sleep(1.5)
-                os.system("cls")
-                action()
             elif f4max >= catch_chance >= f4min:
                 catch_count += 1
                 time.sleep(1)
@@ -457,18 +431,10 @@ def explore():
                 print("Poké Ball broke!")
                 time.sleep(0.75)
                 print("Shoot! It was so close, too!")
-                if catch_count == 5:
-                    time.sleep(1.5)
-                    print("Wild", pokemon_list[pokemon], "fled!")
-                    time.sleep(2)
-                    mainmenu()
-                time.sleep(1.5)
-                os.system("cls")
-                action()
             elif cmax >= catch_chance >= cmin:
                 time.sleep(1)
                 print("Poké Ball shake 3 time")
-                if shiny_chance == 100:
+                if is_shiny:
                     time.sleep(1)
                     print("Gotcha! ✨", pokemon_list[pokemon], "was caught!")
                     if item_drop_chance == 10:
@@ -477,9 +443,6 @@ def explore():
                     time.sleep(1.5)
                     print(pokemon_list[pokemon], "was sent to PC!")
                     PC.append("✨" + pokemon_list[pokemon])
-                    time.sleep(1)
-                    os.system("cls")
-                    mainmenu()
                 else:
                     time.sleep(1)
                     print("Gotcha!", pokemon_list[pokemon], "was caught!")
@@ -489,9 +452,18 @@ def explore():
                     time.sleep(1.5)
                     print(pokemon_list[pokemon], "was sent to PC!")
                     PC.append(pokemon_list[pokemon])
-                    time.sleep(1)
-                    os.system("cls")
-                    mainmenu()
+                time.sleep(1)
+                os.system("cls")
+                mainmenu()
+            if catch_count == 5:
+                time.sleep(1.5)
+                print("Wild", pokemon_list[pokemon], "fled!")
+                time.sleep(2)
+                mainmenu()
+            print("catch count :"+str(catch_count))
+            time.sleep(1.5)
+            os.system("cls")
+            action()
 
         elif choice_action == "2":
             time.sleep(0.25)
